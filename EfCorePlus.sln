@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E43BB097-4D3A-4E5B-9D81-3B35665327D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4BFC532C-5CDE-4670-9AB3-C6A3FF43BA05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCorePlus", "src\EfCorePlus\EfCorePlus.csproj", "{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCorePlus.Test", "test\EfCorePlus.Test\EfCorePlus.Test.csproj", "{2B4001AC-F798-4F94-9AB8-A900B5394851}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4001AC-F798-4F94-9AB8-A900B5394851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4001AC-F798-4F94-9AB8-A900B5394851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4001AC-F798-4F94-9AB8-A900B5394851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4001AC-F798-4F94-9AB8-A900B5394851}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAC8D67A-E688-4E1C-ABEE-7FE1FB21A0F2} = {E43BB097-4D3A-4E5B-9D81-3B35665327D3}
+		{2B4001AC-F798-4F94-9AB8-A900B5394851} = {4BFC532C-5CDE-4670-9AB3-C6A3FF43BA05}
+	EndGlobalSection
+EndGlobal
