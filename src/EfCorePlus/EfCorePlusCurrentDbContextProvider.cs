@@ -1,16 +1,17 @@
 ﻿using EfCorePlus.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace EfCorePlus
 {
     public class EfCorePlusCurrentDbContextProvider
     {
-        private readonly AsyncLocal<IEfCorePlusDbContext?> _current = new AsyncLocal<IEfCorePlusDbContext?>();
+        private readonly AsyncLocal<DbContext?> _current = new AsyncLocal<DbContext?>();
 
-        public IEfCorePlusDbContext? CurrentDbContext => _current.Value;
+        public DbContext? Current => _current.Value;
 
-        public IDisposable Use(IEfCorePlusDbContext? context)
+        public IDisposable Use(DbContext? context)
         {
-            var previousValue = CurrentDbContext;
+            var previousValue = Current;
             _current.Value = context;
             return new DisposeAction(() =>
             {

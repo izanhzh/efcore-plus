@@ -21,7 +21,7 @@ namespace EfCorePlus
 
         public override object Execute(Expression expression)
         {
-            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context as IEfCorePlusDbContext))
+            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context))
             {
                 return base.Execute(expression);
             }
@@ -29,7 +29,7 @@ namespace EfCorePlus
 
         public override TResult Execute<TResult>(Expression expression)
         {
-            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context as IEfCorePlusDbContext))
+            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context))
             {
                 return base.Execute<TResult>(expression);
             }
@@ -37,7 +37,7 @@ namespace EfCorePlus
 
         public override TResult ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = new CancellationToken())
         {
-            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context as IEfCorePlusDbContext))
+            using (EfCorePlusCurrentDbContextProvider.Use(CurrentDbContext.Context))
             {
                 return base.ExecuteAsync<TResult>(expression, cancellationToken);
             }

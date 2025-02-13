@@ -58,9 +58,7 @@ namespace EfCorePlus.Filters
                         // 第一个参数固定为Entity Type的全名，是一个字符串常量
                         var entityType = (string)((SqlConstantExpression)args[0]).Value!;
 
-                        var isFilterDisabled = ((DbContext)currentDbContextProvider.CurrentDbContext!)
-                            .GetService<EfCorePlusCurrentFilterManagerProvider>()
-                                .Current?.IsFilterDisabled(filter.GetType(), entityType);
+                        var isFilterDisabled = currentDbContextProvider.Current?.GetService<EfCorePlusCurrentFilterManagerProvider>().Current?.IsFilterDisabled(filter.GetType(), entityType);
                         if (isFilterDisabled == true)
                         {
                             // empty where sql
