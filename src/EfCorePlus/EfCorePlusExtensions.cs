@@ -12,48 +12,48 @@ namespace EfCorePlus
             return dbContext.GetService<EfCorePlusCurrentFilterManagerProvider>().Create();
         }
 
-        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, Type filterType)
+        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType)
         {
-            filterDisablerWrapper.Object.DisableFilter(filterType);
+            filterManagerWrapper.Object.DisableFilter(filterType);
         }
 
-        public static void DisableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper)
+        public static void DisableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper)
             where TFilter : IFilter
         {
-            filterDisablerWrapper.Object.DisableFilter<TFilter>();
+            filterManagerWrapper.Object.DisableFilter<TFilter>();
         }
 
-        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, Type filterType)
+        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType)
         {
-            filterDisablerWrapper.Object.EnableFilter(filterType);
+            filterManagerWrapper.Object.EnableFilter(filterType);
         }
 
-        public static void EnableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper)
+        public static void EnableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper)
             where TFilter : IFilter
         {
-            filterDisablerWrapper.Object.EnableFilter<TFilter>();
+            filterManagerWrapper.Object.EnableFilter<TFilter>();
         }
 
-        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, Type filterType, params string[] entityType)
+        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params string[] entityType)
         {
-            filterDisablerWrapper.Object.DisableFilter(filterType, entityType);
+            filterManagerWrapper.Object.DisableFilter(filterType, entityType);
         }
 
-        public static void DisableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, params Type[] entityType)
+        public static void DisableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, params Type[] entityType)
             where TFilter : IFilter
         {
-            filterDisablerWrapper.Object.DisableFilter<TFilter>(entityType);
+            filterManagerWrapper.Object.DisableFilter<TFilter>(entityType);
         }
 
-        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, Type filterType, params string[] entityType)
+        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params string[] entityType)
         {
-            filterDisablerWrapper.Object.EnableFilter(filterType, entityType);
+            filterManagerWrapper.Object.EnableFilter(filterType, entityType);
         }
 
-        public static void EnableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterDisablerWrapper, params Type[] entityType)
+        public static void EnableFilter<TFilter>(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, params Type[] entityType)
             where TFilter : IFilter
         {
-            filterDisablerWrapper.Object.EnableFilter<TFilter>(entityType);
+            filterManagerWrapper.Object.EnableFilter<TFilter>(entityType);
         }
     }
 }
