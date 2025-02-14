@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 
 namespace EfCorePlus.Filters
 {
@@ -20,6 +22,11 @@ namespace EfCorePlus.Filters
             {
                 yield return (IFilter)_serviceProvider.GetRequiredService(filterType);
             }
+        }
+
+        public bool IsRegistered(Type filterType)
+        {
+            return _options.Value.FilterTypes.Contains(filterType);
         }
     }
 }

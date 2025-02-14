@@ -2,6 +2,7 @@
 using EfCorePlus.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 
 namespace EfCorePlus
 {
@@ -9,7 +10,9 @@ namespace EfCorePlus
     {
         public static ObjectDisposeAcitonWrapper<FilterManager> CreateFilterManager<TDbContext>(this TDbContext dbContext) where TDbContext : DbContext, IEfCorePlusDbContext
         {
-            return dbContext.GetService<EfCorePlusCurrentFilterManagerProvider>().Create();
+            var filterFactory = dbContext.GetService<IFilterFactory>();
+            var currentFilterManagerProvider = dbContext.GetService<EfCorePlusCurrentFilterManagerProvider>();
+            return currentFilterManagerProvider.Create(filterFactory);
         }
 
         public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType)

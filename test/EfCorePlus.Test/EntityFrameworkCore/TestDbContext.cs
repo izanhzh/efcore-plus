@@ -7,6 +7,16 @@ namespace EfCorePlus.Test.EntityFrameworkCore
     {
         public int? CurrentTenantId { get; set; }
 
+        public DbSet<SoftDeleteTestData> SoftDeleteTestDatas { get; set; }
+
+        public DbSet<TanentTestData> TanentTestDatas { get; set; }
+
+        public DbSet<ActiveTestData> ActiveTestDatas { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<Post> Posts { get; set; }
+
         public DbSet<User> Users { get; set; }
 
         public TestDbContext(DbContextOptions<TestDbContext> options) : base(options)
@@ -15,11 +25,9 @@ namespace EfCorePlus.Test.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ConfigureGlobalFilters(this);
-
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>(entity => entity.ToTable("Users"));
+            modelBuilder.ConfigureGlobalFilters(this);
         }
 
         public string GetCompiledQueryCacheKey()

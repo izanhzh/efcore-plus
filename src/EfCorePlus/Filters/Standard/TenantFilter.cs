@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace EfCorePlus.Filters.Standard
@@ -39,11 +41,11 @@ namespace EfCorePlus.Filters.Standard
 
         public virtual SqlExpression BuildDbFunctionTranslation(IReadOnlyList<SqlExpression> args)
         {
-            //(string entityType, int tenantId, int currentTenantId)
+            // (string entityType, int tenantId, int currentTenantId)
             var tenantId = args[1];
             var currentTenantId = args[2];
 
-            //TenantId == CurrentTenantId
+            // ((ITenant)e).TenantId == dbContext.CurrentTenantId
             return new SqlBinaryExpression(
                 ExpressionType.Equal,
                 tenantId,

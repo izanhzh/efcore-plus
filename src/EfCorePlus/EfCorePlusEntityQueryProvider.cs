@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Linq.Expressions;
+using System.Threading;
 
 namespace EfCorePlus
 {

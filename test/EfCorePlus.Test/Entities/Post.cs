@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EfCorePlus.Test.Entities
 {
-    public class User : ITenant, ISoftDelete
+    public class Post : ISoftDelete
     {
         [Key]
         public int Id { get; set; }
 
-        public int TenantId { get; set; }
-
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public virtual Blog? Blog { get; set; }
     }
 }

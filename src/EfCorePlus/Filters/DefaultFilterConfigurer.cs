@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -33,7 +36,7 @@ namespace EfCorePlus.Filters
             // 遍历所有的实体类型, 为每个实体类型配置全局过滤器
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                ConfigureEntityGlobalFiltersMethodInfo.MakeGenericMethod(typeof(TDbContext), entityType.ClrType).Invoke(this, [dbContext, modelBuilder, entityType, filters]);
+                ConfigureEntityGlobalFiltersMethodInfo.MakeGenericMethod(typeof(TDbContext), entityType.ClrType).Invoke(this, new object[] { dbContext, modelBuilder, entityType, filters });
             }
 
             // 注册过滤器的DbFunction
@@ -56,17 +59,29 @@ namespace EfCorePlus.Filters
                          */
 
                         // 第一个参数固定为Entity Type的全名，是一个字符串常量
+#if NETCOREAPP3_1
+                        var entityType = (string)((SqlConstantExpression)args.First()).Value!;
+#else
                         var entityType = (string)((SqlConstantExpression)args[0]).Value!;
+#endif
 
                         var isFilterDisabled = currentDbContextProvider.Current?.GetService<EfCorePlusCurrentFilterManagerProvider>().Current?.IsFilterDisabled(filter.GetType(), entityType);
                         if (isFilterDisabled == true)
                         {
                             // empty where sql
+#if NET9_0_OR_GREATER
                             return new SqlConstantExpression(true, new BoolTypeMapping("bool", DbType.Boolean));
+#else
+                            return new SqlConstantExpression(Expression.Constant(true), new BoolTypeMapping("bool", DbType.Boolean));
+#endif
                         }
                         else
                         {
+#if NETCOREAPP3_1
+                            return filter.BuildDbFunctionTranslation(args.ToList());
+#else
                             return filter.BuildDbFunctionTranslation(args);
+#endif
                         }
                     });
             }

@@ -1,4 +1,6 @@
 ﻿using EfCorePlus.Filters;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace EfCorePlus
@@ -12,7 +14,7 @@ namespace EfCorePlus
             FilterTypes = new HashSet<Type>();
         }
 
-        public void AddFilter<TFilter>() where TFilter : IFilter, new()
+        public void RegisterFilter<TFilter>() where TFilter : IFilter, new()
         {
             var dbFunctionMethod = typeof(TFilter).GetMethod("DbFunction", BindingFlags.Static | BindingFlags.Public);
             if (dbFunctionMethod == null)
@@ -23,6 +25,10 @@ namespace EfCorePlus
             if (dbFunctionParameters.Length == 0 || dbFunctionParameters[0].ParameterType != typeof(string) || dbFunctionParameters[0].Name != "entityType")
             {
                 throw new ArgumentException($"The Filter `{typeof(TFilter).FullName}` must provide a static method named 'DbFunction' with first parameter type is string and name is entityType");
+            }
+            if (dbFunctionMethod.ReturnType != typeof(bool))
+            {
+                throw new ArgumentException($"The Filter `{typeof(TFilter).FullName}` method 'DbFunction' return type must be bool");
             }
             FilterTypes.Add(typeof(TFilter));
         }

@@ -1,5 +1,6 @@
 ﻿using EfCorePlus.Test.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace EfCorePlus.Test
 {

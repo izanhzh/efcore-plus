@@ -1,4 +1,7 @@
-﻿namespace EfCorePlus.Utils
+﻿using System;
+using System.Threading;
+
+namespace EfCorePlus.Utils
 {
     public class DisposeAction : IDisposable
     {

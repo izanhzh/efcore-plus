@@ -1,4 +1,7 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EfCorePlus.Filters
 {
@@ -7,11 +10,13 @@ namespace EfCorePlus.Filters
         private static readonly object _lock = new object();
         private readonly HashSet<Type> _allEntityDisabledFilters;//filter disabled for all entities
         private readonly ConcurrentDictionary<Type, HashSet<string>> _entityDisabledFilters;//filter disabled for specific entities
+        private readonly IFilterFactory _filterFactory;
 
-        public FilterManager()
+        public FilterManager(IFilterFactory filterFactory)
         {
             _allEntityDisabledFilters = new HashSet<Type>();
             _entityDisabledFilters = new ConcurrentDictionary<Type, HashSet<string>>();
+            _filterFactory = filterFactory;
         }
 
         public string? CompiledQueryCacheKey { get; private set; }
@@ -46,6 +51,14 @@ namespace EfCorePlus.Filters
         {
             lock (_lock)
             {
+                if (!typeof(IFilter).IsAssignableFrom(filterType))
+                {
+                    throw new InvalidOperationException($"The type `{filterType.FullName}` does not implement the interface `{typeof(IFilter).FullName}`.");
+                }
+                if(!_filterFactory.IsRegistered(filterType))
+                {
+                    throw new InvalidOperationException($"The filter `{filterType.FullName}` is not registered.");
+                }
                 if (_entityDisabledFilters.ContainsKey(filterType))
                 {
                     throw new InvalidOperationException($"The filter `{filterType.FullName}` has been disabled for specific entities, you can't disable it for all entities.");
@@ -68,6 +81,14 @@ namespace EfCorePlus.Filters
         {
             lock (_lock)
             {
+                if (!typeof(IFilter).IsAssignableFrom(filterType))
+                {
+                    throw new InvalidOperationException($"The type `{filterType.FullName}` does not implement the interface `{typeof(IFilter).FullName}`.");
+                }
+                if (!_filterFactory.IsRegistered(filterType))
+                {
+                    throw new InvalidOperationException($"The filter `{filterType.FullName}` is not registered.");
+                }
                 if (_entityDisabledFilters.ContainsKey(filterType))
                 {
                     throw new InvalidOperationException($"The filter `{filterType.FullName}` has been disabled for specific entities, you can't enable it for all entities.");
@@ -90,6 +111,14 @@ namespace EfCorePlus.Filters
         {
             lock (_lock)
             {
+                if (!typeof(IFilter).IsAssignableFrom(filterType))
+                {
+                    throw new InvalidOperationException($"The type `{filterType.FullName}` does not implement the interface `{typeof(IFilter).FullName}`.");
+                }
+                if (!_filterFactory.IsRegistered(filterType))
+                {
+                    throw new InvalidOperationException($"The filter `{filterType.FullName}` is not registered.");
+                }
                 if (_allEntityDisabledFilters.Contains(filterType))
                 {
                     throw new InvalidOperationException($"The filter `{filterType.FullName}` has been disabled for all entities, you can't disable it for specific entities.");
@@ -117,6 +146,14 @@ namespace EfCorePlus.Filters
         {
             lock (_lock)
             {
+                if (!typeof(IFilter).IsAssignableFrom(filterType))
+                {
+                    throw new InvalidOperationException($"The type `{filterType.FullName}` does not implement the interface `{typeof(IFilter).FullName}`.");
+                }
+                if (!_filterFactory.IsRegistered(filterType))
+                {
+                    throw new InvalidOperationException($"The filter `{filterType.FullName}` is not registered.");
+                }
                 if (_allEntityDisabledFilters.Contains(filterType))
                 {
                     throw new InvalidOperationException($"The filter `{filterType.FullName}` has been disabled for all entities, you can't enable it for specific entities.");

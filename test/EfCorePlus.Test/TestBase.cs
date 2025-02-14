@@ -1,5 +1,7 @@
 ﻿using EfCorePlus.Test.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using Xunit;
 
 namespace EfCorePlus.Test
 {
@@ -7,13 +9,16 @@ namespace EfCorePlus.Test
     {
         private readonly ServiceProviderFixture _serviceProviderFixture;
 
+        private readonly TestDbContextFactory _factory;
+
         protected TestBase(ServiceProviderFixture serviceProviderFixture)
         {
             _serviceProviderFixture = serviceProviderFixture;
+            _factory = _serviceProviderFixture.ServiceProvider.GetRequiredService<TestDbContextFactory>();
         }
 
         public IServiceProvider ServiceProvider => _serviceProviderFixture.ServiceProvider;
 
-        public TestDbContextFactory CreateTestDbContextFactory() => ServiceProvider.GetRequiredService<TestDbContextFactory>();
+        public TestDbContext CreateTestDbContext() => _factory.CreateContext();
     }
 }

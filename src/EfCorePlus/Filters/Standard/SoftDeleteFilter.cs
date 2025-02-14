@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 
@@ -27,14 +29,18 @@ namespace EfCorePlus.Filters.Standard
 
         public virtual SqlExpression BuildDbFunctionTranslation(IReadOnlyList<SqlExpression> args)
         {
-            //(string entityType, bool isDeleted)
+            // (string entityType, bool isDeleted)
             var isDeleted = args[1];
 
-            //IsDeleted == false
+            // ((ISoftDelete)e).IsDeleted == false
             return new SqlBinaryExpression(
                 ExpressionType.Equal,
                 isDeleted,
+#if NET9_0_OR_GREATER
                 new SqlConstantExpression(false, new BoolTypeMapping("bool", DbType.Boolean)),
+#else
+                new SqlConstantExpression(Expression.Constant(false), new BoolTypeMapping("bool", DbType.Boolean)),
+#endif
                 isDeleted.Type,
                 isDeleted.TypeMapping);
         }

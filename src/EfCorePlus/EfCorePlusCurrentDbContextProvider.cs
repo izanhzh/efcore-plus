@@ -1,5 +1,7 @@
 ﻿using EfCorePlus.Utils;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
 
 namespace EfCorePlus
 {

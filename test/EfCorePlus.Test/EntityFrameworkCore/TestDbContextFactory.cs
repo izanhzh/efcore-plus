@@ -1,6 +1,7 @@
 ﻿using EfCorePlus.Filters.Standard;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace EfCorePlus.Test.EntityFrameworkCore
 {
@@ -16,14 +17,17 @@ namespace EfCorePlus.Test.EntityFrameworkCore
 
         public TestDbContext CreateContext()
         {
-            var options = new DbContextOptionsBuilder<TestDbContext>()
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<TestDbContext>()
                 .UseSqlite(connection)
                 .AddEfCorePlus(options =>
                 {
-                    options.AddFilter<SoftDeleteFilter>();
-                    options.AddFilter<TenantFilter>();
+                    options.RegisterFilter<SoftDeleteFilter>();
+                    options.RegisterFilter<TenantFilter>();
+                    options.RegisterFilter<IsActiveFilter>();
                 })
-            .Options;
+                .UseLazyLoadingProxies();
+            dbContextOptionsBuilder.AddInterceptors(new SqliteCommandInterceptor());
+            var options = dbContextOptionsBuilder.Options;
             var context = new TestDbContext(options);
             context.Database.EnsureCreated();
             return context;

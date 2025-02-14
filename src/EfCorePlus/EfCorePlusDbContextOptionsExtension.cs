@@ -1,8 +1,12 @@
 ﻿using EfCorePlus.Filters;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EfCorePlus
 {
@@ -58,9 +62,13 @@ namespace EfCorePlus
 
             public override bool IsDatabaseProvider => false;
 
+#if NETCOREAPP3_1 
+            public override long GetServiceProviderHashCode() => 0;
+#else
             public override int GetServiceProviderHashCode() => 0;
 
             public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other) => other is EfCorePlusDbContextOptionsExtensionInfo;
+#endif
 
             public override void PopulateDebugInfo(IDictionary<string, string> debugInfo)
             {
