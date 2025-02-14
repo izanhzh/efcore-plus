@@ -1,2 +1,2 @@
 # efcore-plus
-this is an extension of ef core
+This is an extension of ef core
