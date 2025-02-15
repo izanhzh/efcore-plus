@@ -6,6 +6,7 @@ on:
       - main
       - dev
   workflow_dispatch:
+
 jobs:
   run_test:
     name: run test
@@ -18,11 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
+      - name: Setup .NET SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-
+      
+      - name: Install dependencies
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        
       - name: Test
-        run: |
-          dotnet test test/EfCorePlus.Test
+        run: dotnet test test/EfCorePlus.Test --no-restore --verbosity normal
