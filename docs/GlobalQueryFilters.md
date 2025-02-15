@@ -188,7 +188,7 @@ public class LanguageFilter : IFilter
 	}
 }
 ```
-[IFilter Details](docs/IFilter.md)
+[IFilter Details](IFilter.md)
 
 3. Add a `CurrentLanguage` property in your DbContext and include it in the `GetCompiledQueryCacheKey`
 ```csharp
