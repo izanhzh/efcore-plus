@@ -1,97 +1,48 @@
-name: Build and Release with Contributors and PR Info
+name: Create Release Draft
 
 on:
   push:
     branches:
-      - release
-    tags:
-      - 'v*.*.*' # 当推送到带有版本号的标签时触发
+      - release 
 
 jobs:
-  build:
+  draft-release:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '9.0.x' 
+      - name: Generate Release Notes
+        id: release_notes
+        uses: release-drafter/release-drafter@v5
+        with:
+          name: "Release ${{ github.ref_name }}"
+          tag_name: "v${{ github.ref_name }}"
+          prerelease: false
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-    - name: Build project
-      run: dotnet build --configuration Release --no-restore
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
 
-    - name: Publish project
-      run: dotnet publish -c Release -o ./publish
+      - name: Create source distribution
+        run: |
+          python setup.py sdist
 
-    - name: Zip artifact for release
-      run: zip -r publish.zip ./publish
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: publish
-        path: publish.zip
-
-  generate-release-notes:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-
-    - name: Install dependencies
-      run: npm install github-release-notes
-
-    - name: Generate Release Notes
-      id: generate_notes
-      run: |
-        npx github-release-notes --owner=${{ github.repository_owner }} --repo=${{ github.event.repository.name }} --tag=${{ github.ref_name }} --token=${{ secrets.GITHUB_TOKEN }} > RELEASE_NOTES.md
-
-  release:
-    needs: [build, generate-release-notes]
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Download Artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: publish
-
-    - name: Download Release Notes
-      uses: actions/download-artifact@v3
-      with:
-        name: generate-release-notes
-
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        body_path: ./generate-release-notes/RELEASE_NOTES.md # 使用生成的发布说明文件
-        draft: false
-        prerelease: false
-
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./publish/publish.zip
-        asset_name: publish.zip
-        asset_content_type: application/zip
+      - name: Upload source distribution
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.release_notes.outputs.upload_url }}
+          asset_path: ./dist/*.tar.gz
+          asset_name: source-code.tar.gz
+          asset_content_type: application/gzip

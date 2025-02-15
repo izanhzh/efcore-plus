@@ -1,0 +1,12 @@
+template: |
+  ## What's Changed
+
+  ${{ each changeset in changesets }}
+  - **${{ changeset.title }}** ${{ changeset.author }} #${{ changeset.number }}
+  ${{ endeach }}
+
+  ## New Contributors
+
+  ${{ each contributor in new_contributors }}
+  - **${{ contributor.login }}**
+  ${{ endeach }}
