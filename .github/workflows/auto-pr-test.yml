@@ -10,6 +10,10 @@ jobs:
   run_test:
     name: run test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['3.1.x','6.0.x', '7.0.x', '8.0.x', '9.0.x']  # 添加你需要的 .NET 版本
+      fail-fast: false  # 如果一个作业失败，是否停止其他作业
 
     steps:
       - uses: actions/checkout@v4
@@ -17,7 +21,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Test
         run: |
