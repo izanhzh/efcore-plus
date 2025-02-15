@@ -9,6 +9,7 @@
 		<PackageProjectUrl>https://github.com/izanhzh/efcore-plus</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/izanhzh/efcore-plus.git</RepositoryUrl>
+		<Description>This is an extension library based on Entity Framework Core that provides some custom features for better use of Entity Framework Core.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>

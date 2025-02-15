@@ -1,4 +1,4 @@
-﻿namespace EfCorePlus.Test.EntityFrameworkCore
+﻿namespace EfCorePlus.Test.Entities
 {
     public interface IIsActive
     {

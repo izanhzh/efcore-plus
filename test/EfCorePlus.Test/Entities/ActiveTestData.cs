@@ -1,5 +1,4 @@
-﻿using EfCorePlus.Test.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EfCorePlus.Test.Entities
 {

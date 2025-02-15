@@ -1,4 +1,5 @@
 ﻿using EfCorePlus.Filters;
+using EfCorePlus.Test.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
