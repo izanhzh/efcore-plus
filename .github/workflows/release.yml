@@ -1,9 +1,17 @@
 name: Create Release Draft
 
 on:
-  push:
-    branches:
-      - main  # 你可以根据需要更改分支名称
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name for the release'
+        required: true
+      release_name:
+        description: 'Release name'
+        required: true
+      branchName:
+          description: 'Branch Name'     
+          required: true
 
 jobs:
   create_release_draft:
@@ -12,6 +20,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.branchName }}
 
       - name: Create source code archive (ZIP)
         run: |
