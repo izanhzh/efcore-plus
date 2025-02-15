@@ -11,17 +11,23 @@ jobs:
   run_test:
     name: run test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ['6.0', '7.0', '8.0', '9.0']
     
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET SDK
+      - name: Setup .NET SDK .NET 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+
+      - name: Setup .NET SDK 6.0 Later
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}.x
+          dotnet-version: |
+            6.0.x
+            7.0.x
+            8.0.x
+            9.0.x
           
-      - name: Test net${{ matrix.dotnet-version }}
-        run: dotnet test test/EfCorePlus.Test --framework net${{ matrix.dotnet-version }}
+      - name: Test
+        run: dotnet test test/EfCorePlus.Test
