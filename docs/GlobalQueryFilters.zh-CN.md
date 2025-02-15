@@ -1,19 +1,19 @@
-# Global Query Filters Plus
+# 全局过滤增强
 
-This feature implements global filters based on `DbFunction` To use this library effectively, you should first understand how to use `DbFunction` .
+此功能是基于 `DbFunction` 来实现全局过滤器的，你需要先掌握理解 `DbFunction` 的用法，才能更好的使用此库。
 
-Please refer to: [Mapping a method to a custom SQL](https://learn.microsoft.com/en/ef/core/querying/user-defined-function-mapping#mapping-a-method-to-a-custom-sql)。
+请先参考阅读理解：[将方法映射到自定义 SQL](https://learn.microsoft.com/zh-cn/ef/core/querying/user-defined-function-mapping#mapping-a-method-to-a-custom-sql)。
 
-If you are familiar with C# expression trees `Expression`, that's even better. If not, don't worry; powerful AI tools can help you construct the expressions you need.
+如果你会C#表达式树 `Expression` 那就更好了，如果你不会，也不用担心，借助一些强大的AI工具，你可以很快构造出你想要的表达式。
 
-## Usage
+## 使用方法
 
-1. Add NuGet Package
+1. 添加Nuget包
 ```nuget
 dotnet add package EfCorePlus
 ```
 
-2. Inherit your DbContext from `IEfCorePlusDbContext` and implement its methods
+2. 将你的DbContext继承自 `IEfCorePlusDbContext`, 实现接口中的方法
 ```csharp
 public class MyDbContext : DbContext, IEfCorePlusDbContext
 {
@@ -30,11 +30,11 @@ public class MyDbContext : DbContext, IEfCorePlusDbContext
 }
 ```
 
-The `GetCompiledQueryCacheKey` method controls the cache key for compiled SQL statements. For example, if you want to filter data by tenant ID, you can use the current tenant ID as the cache key. When the current tenant ID changes, it will trigger recompilation and generate new filtered SQL statements.
+`GetCompiledQueryCacheKey` 方法用来控制编译生成SQL语句的缓存Key。例如我们需要根据租户ID过滤数据，那么我们可以将当前租户ID作为缓存Key，这样当前租户ID发生变化时，会重新触发编译，从而生成新的过滤SQL语句。
 
-> Note: When dynamic parameters are used as filtering conditions, ensure they are part of the cache key in the `GetCompiledQueryCacheKey` method.
+> 请注意：当你有数据会作为过滤条件的动态参数时，你需要注意将其作为缓存Key的一部分，在 `GetCompiledQueryCacheKey` 方法中将其添加上去。
 
-3. Add global filters in the `OnModelCreating` method
+3. 在 `OnModelCreating` 方法中添加全局过滤
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 }
 ```
 
-4. Configure EfCorePlus
+4. 配置EfCorePlus
 ```csharp
 services.AddDbContext<MyDbContext>(options =>
 {
@@ -54,15 +54,15 @@ services.AddDbContext<MyDbContext>(options =>
 		{
 			options.RegisterFilter<SoftDeleteFilter>();
 			options.RegisterFilter<TenantFilter>();
-			// Add your custom filters here
+			// 添加你自定义的过滤器
 		});
 });
 ```
 
-## Standard Filters
+## 使用内置的过滤器
 
-### Soft Delete Filter: `SoftDeleteFilter`
-To use the soft delete filter, implement the `ISoftDelete` interface in your entities. EF Core will automatically filter out entities where `IsDeleted` is  `true` .
+### 软删除过滤器: `SoftDeleteFilter`
+只需要将你的实体，增加 `ISoftDelete` 接口实现，即可使用软删除过滤器，Ef Core在执行查询的时候会自动过滤掉该实体中 `IsDeleted` 为 `true` 的数据。
 ```csharp
 public class MyEntity : ISoftDelete
 {
@@ -72,8 +72,8 @@ public class MyEntity : ISoftDelete
 }
 ```
 
-### Multi-Tenant Filter: `TenantFilter`
-1. Implement the `ITenant` interface in your entities
+### 多租户过滤器: `TenantFilter`
+1. 将你的实体，增加`ITenant`接口实现
 ```csharp
 public class MyEntity : ITenant
 {
@@ -83,7 +83,7 @@ public class MyEntity : ITenant
 }
 ```
 
-2. Add a  `CurrentTenantId` property in your DbContext and include it in the `GetCompiledQueryCacheKey`
+2. 在你的DbContext中增加 `CurrentTenantId` 属性，并将 `CurrentTenantId` 属性，作为编译生成SQL语句缓存Key的一部分
 ```csharp
 public class MyDbContext : DbContext, IEfCorePlusDbContext
 {
@@ -98,7 +98,7 @@ public class MyDbContext : DbContext, IEfCorePlusDbContext
 }
 ```
 
-3. Set the `CurrentTenantId` property when querying data
+3. 查询数据时，设置 `CurrentTenantId` 属性
 ```csharp
 using (var context = new MyDbContext())
 {
@@ -107,9 +107,9 @@ using (var context = new MyDbContext())
 }
 ```
 
-You don't necessarily need to manually set `CurrentTenantId` every time. You can inject the context storing the current tenant information into the DbContext and bind it to  `CurrentTenantId`.
+`CurrentTenantId` 属性值，并不一定需要在查询时进行手动设置，如果你不想每次都手动设置当前租户ID，你只需要想办法将你用来存储当前租户信息的上下文注入到DbContext中，绑定给`CurrentTenantId`属性即可。
 
-For example, store the current tenant ID in `HttpContext` and retrieve it in your DbContext.
+例如：将当前租户ID保存到 `HttpContext` 中，然后在你的DbContext中，通过 `HttpContext` 获取当前租户ID。
 
 ```csharp
 public class MyDbContext : DbContext, IEfCorePlusDbContext
@@ -130,10 +130,10 @@ public class MyDbContext : DbContext, IEfCorePlusDbContext
 }
 ```
 
-## Custom Filters
-Let's create a multi-language filter as an example.
+## 自定义过滤器
+我们以自定义一个多语言过滤器为例，来演示如何自定义一个过滤器。
 
-1. Create an interface to mark entities that require language filtering
+1. 创建一个接口，用来标记需要多语言过滤的实体
 ```csharp
 public interface ILanguage
 {
@@ -141,7 +141,7 @@ public interface ILanguage
 }
 ```
 
-2. Create a multi-language filter
+2. 创建一个多语言过滤器
 ```csharp
 public class LanguageFilter : IFilter
 {
@@ -188,9 +188,9 @@ public class LanguageFilter : IFilter
 	}
 }
 ```
-[IFilter Details](docs/IFilter.md)
+[IFilter详解](docs/IFilter.md)
 
-3. Add a `CurrentLanguage` property in your DbContext and include it in the `GetCompiledQueryCacheKey`
+3. 在你的DbContext中增加 `CurrentLanguage` 属性，并将 `CurrentLanguage` 属性，作为编译生成SQL语句缓存Key的一部分
 ```csharp
 public class MyDbContext : DbContext, IEfCorePlusDbContext
 {
@@ -208,7 +208,7 @@ public class MyDbContext : DbContext, IEfCorePlusDbContext
 }
 ```
 
-4. Modify EfCorePlus Configuration
+4. 更改EfCorePlus配置
 ```csharp
 services.AddDbContext<MyDbContext>(options =>
 {
@@ -221,7 +221,7 @@ services.AddDbContext<MyDbContext>(options =>
 });
 ```
 
-5. Use the multi-language filter
+5. 使用多语言过滤器
 ```csharp
 using (var context = new MyDbContext())
 {
@@ -232,9 +232,9 @@ using (var context = new MyDbContext())
 }
 ```
 
-## Disabling Filters
+## 关闭过滤器
 
-Assume the following sample entities:
+假设示例实体：
 ```csharp
 public class Blog : ISoftDelete, ITenant
 {
@@ -253,7 +253,7 @@ public class User : ISoftDelete, ITenant
 }
 ```
 
-### Disable Filters for All Entities
+### 对全部实体关闭过滤器
 ```csharp
 using (var context = new MyDbContext())
 {
@@ -300,7 +300,7 @@ using (var context = new MyDbContext())
 }
 ```
 
-### Disable Filters for a Single Entity
+### 对单个实体关闭过滤器
 ```csharp
 using (var context = new MyDbContext())
 {
@@ -331,7 +331,7 @@ using (var context = new MyDbContext())
 }
 ```
 
-### Important Notes
-1. Do not call `CreateFilterManager`  multiple times on the same DbContext instance.
-2. Use a `using`  statement to ensure filters revert to their initial state after the block ends.
-3. If you disable all entity filters, you cannot disable individual entity filters, and vice versa.
+### 注意事项
+1. 对同一个DbContext实例对象，不能多次调用 `CreateFilterManager` 方法
+2. 请使用 `using` 语句包裹，`using` 语句结束后，过滤器将恢复到初始状态
+3. 如果已经使用了关闭全部实体过滤器，那么无法再关闭单个实体过滤器，反之亦然

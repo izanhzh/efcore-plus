@@ -1,16 +1,20 @@
+[English](README.md) | [中文](README.zh-CN.md)
+
+> This is a translation of the Chinese README. The translation may not be accurate. If you find any errors, please let me know, Welcome PR.
+
 # EfCore Plus
 
-这是一个基于 Entity Framework Core 的扩展库，提供了一些自定义的功能，以便更好地使用 Entity Framework Core。
+This is an extension library based on Entity Framework Core that provides some custom features for better use of Entity Framework Core.
 
-## 全局过滤增强
+## Global Query Filter Plus
 
-Entity Framework Core 默认的全局过滤功能存在一些局限性，使用起来不够方便。
+The default global query filter feature of Entity Framework Core has some limitations and is not convenient to use.
 
-- 配置较为繁琐：如果许多实体具有相同的过滤条件（例如：软删除），需要逐个配置，无法自动扫描所有实体进行自动配置。
-- 无法单独关闭某一个过滤条件：如果对一个实体设置了多种过滤条件，只能关闭所有过滤条件。
-  > 此问题自 2017 年起就有人在官方反馈中提出，截至目前，Entity Framework Core 仍未提供最终解决方案，详细请参阅 [官方的改进方案讨论](https://github.com/dotnet/efcore/issues/8576)。
-- 不能全局关闭所有操作实体的过滤：在一个业务操作工作单元中，必须在每个实体操作中单独手动关闭过滤。
+- Complicated configuration: If many entities have the same filter condition (e.g., soft delete), each entity needs to be configured individually, and it cannot automatically scan all entities for automatic configuration.
+- Cannot disable a single filter condition: If multiple filter conditions are set for an entity, all filter conditions can only be disabled together.
+  > This issue has been raised in official feedback since 2017, and as of now, Entity Framework Core has not provided a final solution. For more details, please refer to the [official improvement discussion](https://github.com/dotnet/efcore/issues/8576).
+- Cannot globally disable all filters for operating entities: In a business operation unit, filters must be manually disabled for each entity operation.
 
-EfCore Plus 提供了更加灵活的全局过滤功能。
+EfCore Plus provides more flexible global filter functionality.
 
-[查看文档](docs/GlobalQueryFilters.md)
+[View Documentation](docs/GlobalQueryFilters.md)
