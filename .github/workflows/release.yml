@@ -21,7 +21,7 @@ jobs:
       - name: Create source code archive (TAR.GZ)
         run: |
           mkdir -p dist
-          tar -czf dist/source-code.tar.gz . --exclude='.git'
+          tar --exclude='.git' -czf dist/source-code.tar.gz .
 
       - name: Create Release Draft
         id: create_release
