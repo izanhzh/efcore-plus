@@ -25,4 +25,4 @@ jobs:
             9.0.x
           
       - name: Test
-        run: dotnet test test/EfCorePlus.Test -p:TargetFrameworks=net6.0;net7.0;net8.0;net9.0 #暂不测试3.1，测试环境搭建遇到奇怪问题，暂时解决不了
+        run: dotnet test test/EfCorePlus.Test
