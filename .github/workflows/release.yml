@@ -13,10 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create source code archive
+      - name: Create source code archive (ZIP)
         run: |
           mkdir -p dist
-          tar -czf dist/source-code.tar.gz .
+          zip -r dist/source-code.zip . -x "*.git*" -x "*.git/*"
+
+      - name: Create source code archive (TAR.GZ)
+        run: |
+          mkdir -p dist
+          tar -czf dist/source-code.tar.gz . --exclude='.git'
 
       - name: Create Release Draft
         id: create_release
@@ -29,7 +34,17 @@ jobs:
           draft: true
           prerelease: false
 
-      - name: Upload Source Code Archive
+      - name: Upload Source Code Archive (ZIP)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/source-code.zip
+          asset_name: source-code.zip
+          asset_content_type: application/zip
+
+      - name: Upload Source Code Archive (TAR.GZ)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
