@@ -25,4 +25,4 @@ jobs:
           dotnet-version: ${{ matrix.dotnet }}.0.x
           
       - name: Test  ${{ matrix.dotnet-version }}
-        run: dotnet test test/EfCorePlus.Test -p:TargetFramework=net${{ matrix.dotnet }}.0
+        run: dotnet test test/EfCorePlus.Test -f net${{ matrix.dotnet }}.0 -p:TargetFramework=net${{ matrix.dotnet }}.0
