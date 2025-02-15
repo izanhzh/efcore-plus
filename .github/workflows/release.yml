@@ -6,9 +6,6 @@ on:
       tag_name:
         description: 'Tag name for the release'
         required: true
-      release_name:
-        description: 'Release name'
-        required: true
       branchName:
           description: 'Branch Name'     
           required: true
@@ -39,8 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.event.inputs.tag_name }}
+          release_name: ${{ github.event.inputs.tag_name }}
           draft: true
           prerelease: false
 
