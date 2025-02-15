@@ -188,7 +188,7 @@ public class LanguageFilter : IFilter
 	}
 }
 ```
-[IFilter详解](docs/IFilter.md)
+[IFilter详解](IFilter.md)
 
 3. 在你的DbContext中增加 `CurrentLanguage` 属性，并将 `CurrentLanguage` 属性，作为编译生成SQL语句缓存Key的一部分
 ```csharp
