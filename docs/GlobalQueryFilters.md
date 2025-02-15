@@ -164,7 +164,7 @@ public class LanguageFilter : IFilter
 		{
 			throw new ArgumentException("The DbContext must provide a property named 'CurrentLanguage'");
 		}
-		if (currentLanguageProperty.PropertyType != typeof(string?))
+		if (currentLanguageProperty.PropertyType != typeof(string))
 		{
 			throw new ArgumentException("The DbContext.CurrentLanguage must be string? type");
 		}
