@@ -25,10 +25,10 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
       
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore test/EfCorePlus.Test
         
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build test/EfCorePlus.Test --configuration Release --no-restore
         
       - name: Test
         run: dotnet test test/EfCorePlus.Test --no-restore --verbosity normal
