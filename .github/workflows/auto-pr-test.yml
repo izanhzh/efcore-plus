@@ -19,11 +19,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            3.1.426
             6.0.x
             7.0.x
             8.0.x
             9.0.x
           
       - name: Test
-        run: dotnet test test/EfCorePlus.Test
+        run: dotnet test test/EfCorePlus.Test -p:TargetFrameworks=net6.0;7.0;8.0;9.0 #暂不测试3.1，测试环境搭建遇到奇怪问题，暂时解决不了
