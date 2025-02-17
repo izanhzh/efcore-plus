@@ -3,7 +3,7 @@
 		<Copyright>Amos Huang</Copyright>
 		<Authors>Amos Huang</Authors>
 		<RootNamespace>EfCorePlus</RootNamespace>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/izanhzh/efcore-plus</PackageProjectUrl>
