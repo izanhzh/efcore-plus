@@ -107,7 +107,7 @@ namespace EfCorePlus.Filters
             EnableFilter(typeof(TFilter));
         }
 
-        public void DisableFilter(Type filterType, params string[] entityType)
+        public void DisableFilter(Type filterType, params Type[] entityType)
         {
             lock (_lock)
             {
@@ -130,7 +130,7 @@ namespace EfCorePlus.Filters
                 }
                 foreach (var type in entityType)
                 {
-                    entityTypes.Add(type);
+                    entityTypes.Add(type.FullName!);
                 }
                 ReBuildCompiledQueryCacheKey();
             }
@@ -139,10 +139,10 @@ namespace EfCorePlus.Filters
         public void DisableFilter<TFilter>(params Type[] entityType)
             where TFilter : IFilter
         {
-            DisableFilter(typeof(TFilter), entityType.Select(x => x.FullName!).ToArray());
+            DisableFilter(typeof(TFilter), entityType);
         }
 
-        public void EnableFilter(Type filterType, params string[] entityType)
+        public void EnableFilter(Type filterType, params Type[] entityType)
         {
             lock (_lock)
             {
@@ -162,7 +162,7 @@ namespace EfCorePlus.Filters
                 {
                     foreach (var type in entityType)
                     {
-                        entityTypes.Remove(type);
+                        entityTypes.Remove(type.FullName!);
                     }
                     if (entityTypes.Count == 0)
                     {
@@ -177,7 +177,7 @@ namespace EfCorePlus.Filters
         public void EnableFilter<TFilter>(params Type[] entityType)
             where TFilter : IFilter
         {
-            EnableFilter(typeof(TFilter), entityType.Select(x => x.FullName!).ToArray());
+            EnableFilter(typeof(TFilter), entityType.ToArray());
         }
 
         private void ReBuildCompiledQueryCacheKey()

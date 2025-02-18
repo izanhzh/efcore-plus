@@ -464,8 +464,8 @@ namespace EfCorePlus.Test
             using (var fm = db.CreateFilterManager())
             {
                 {
-                    fm.DisableFilter(typeof(SoftDeleteFilter), typeof(User).FullName!);
-                    fm.DisableFilter(typeof(TenantFilter), typeof(Blog).FullName!);
+                    fm.DisableFilter(typeof(SoftDeleteFilter), typeof(User));
+                    fm.DisableFilter(typeof(TenantFilter), typeof(Blog));
 
                     blogs = db.Blogs.ToList();
                     Assert.Equal(2, blogs.Count);
@@ -481,8 +481,8 @@ namespace EfCorePlus.Test
                 }
 
                 {
-                    fm.EnableFilter(typeof(SoftDeleteFilter), typeof(User).FullName!);
-                    fm.EnableFilter(typeof(TenantFilter), typeof(Blog).FullName!);
+                    fm.EnableFilter(typeof(SoftDeleteFilter), typeof(User));
+                    fm.EnableFilter(typeof(TenantFilter), typeof(Blog));
 
                     blogs = db.Blogs.ToList();
                     Assert.Single(blogs);
