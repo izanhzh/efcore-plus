@@ -37,7 +37,7 @@ namespace EfCorePlus
             filterManagerWrapper.Object.EnableFilter<TFilter>();
         }
 
-        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params string[] entityType)
+        public static void DisableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params Type[] entityType)
         {
             filterManagerWrapper.Object.DisableFilter(filterType, entityType);
         }
@@ -48,7 +48,7 @@ namespace EfCorePlus
             filterManagerWrapper.Object.DisableFilter<TFilter>(entityType);
         }
 
-        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params string[] entityType)
+        public static void EnableFilter(this ObjectDisposeAcitonWrapper<FilterManager> filterManagerWrapper, Type filterType, params Type[] entityType)
         {
             filterManagerWrapper.Object.EnableFilter(filterType, entityType);
         }
