@@ -12,8 +12,9 @@ The default global query filter feature of Entity Framework Core has some limita
 
 - Complicated configuration: If many entities have the same filter condition (e.g., soft delete), each entity needs to be configured individually, and it cannot automatically scan all entities for automatic configuration.
 - Cannot disable a single filter condition: If multiple filter conditions are set for an entity, all filter conditions can only be disabled together.
-  > This issue has been raised in official feedback since 2017, and as of now, Entity Framework Core has not provided a final solution. For more details, please refer to the [official improvement discussion](https://github.com/dotnet/efcore/issues/8576).
 - Cannot globally disable all filters for operating entities: In a business operation unit, filters must be manually disabled for each entity operation.
+
+> A dynamic summary of official community discussions on such issues: [Improve usability of global query filters](https://github.com/dotnet/efcore/issues/21459)
 
 EfCore Plus provides more flexible global filter functionality.
 
