@@ -1,6 +1,6 @@
-# IFilterÏê½â
+# IFilterè¯¦è§£
 
-½Ó¿ÚÊµÏÖÊµÀı£º
+æ¥å£å®ç°å®ä¾‹ï¼š
 ```csharp
 public class LanguageFilter : IFilter
 {
@@ -47,52 +47,52 @@ public class LanguageFilter : IFilter
 	}
 }
 ```
-½Ó¿ÚÊµÏÖ£¬ÉÔÎ¢ÓĞÒ»µã¸´ÔÓ£¬ÈÃÎÒÃÇÖğ²½Ì½¾¿Àí½â¡£
+æ¥å£å®ç°ï¼Œç¨å¾®æœ‰ä¸€ç‚¹å¤æ‚ï¼Œè®©æˆ‘ä»¬é€æ­¥æ¢ç©¶ç†è§£ã€‚
 
-EfCoreÄ¬ÈÏÊÇÕâÑù×¢²áÈ«¾Ö¹ıÂËÆ÷µÄ£º
+EfCoreé»˜è®¤æ˜¯è¿™æ ·æ³¨å†Œå…¨å±€è¿‡æ»¤å™¨çš„ï¼š
 ```csharp
 modelBuilder.Entity<MyEntity>().HasQueryFilter(e => e.Language == CurrentLanguage);
 ```
 
-EfCoreÊÇÕâÑù¹Ø±ÕÈ«¾Ö¹ıÂËÆ÷µÄ£º
+EfCoreæ˜¯è¿™æ ·å…³é—­å…¨å±€è¿‡æ»¤å™¨çš„ï¼š
 ```csharp
 db.Set<MyEntity>().IgnoreQueryFilters();
 ```
 
-`IgnoreQueryFilters` Ò»µ©Ê¹ÓÃ£¬¾Í»á¹Ø±ÕËùÓĞµÄÈ«¾Ö¹ıÂËÆ÷£¬ÎŞ·¨µ¥¶À¹Ø±ÕÄ³Ò»¸ö¹ıÂËÆ÷¡£
+`IgnoreQueryFilters` ä¸€æ—¦ä½¿ç”¨ï¼Œå°±ä¼šå…³é—­æ‰€æœ‰çš„å…¨å±€è¿‡æ»¤å™¨ï¼Œæ— æ³•å•ç‹¬å…³é—­æŸä¸€ä¸ªè¿‡æ»¤å™¨ã€‚
 
-Ò»Ğ©´ÏÃ÷µÄ³ÌĞòÔ±ÃÇÏëµ½ÁËÒ»ÖÖ°ì·¨£¬ÔÚ `e => e.Language == CurrentLanguage` ÕâÀïÔö¼ÓÒ»Ğ©ÅĞ¶Ï£¬±ÈÈçÔÚDbContextÔö¼ÓÒ»¸ö `IsLanguageFilterEnabled` ÊôĞÔ£¬È»ºó½«±í´ïÊ½¸ÄÎª `e => IsLanguageFilterEnabled || e.Language == CurrentLanguage`£¬ÕâÑù¾Í¿ÉÒÔÍ¨¹ıÉèÖÃ `IsLanguageFilterEnabled` À´µ¥¶À¿ØÖÆÊÇ·ñÆôÓÃ¶àÓïÑÔ¹ıÂËÆ÷¡£
+ä¸€äº›èªæ˜çš„ç¨‹åºå‘˜ä»¬æƒ³åˆ°äº†ä¸€ç§åŠæ³•ï¼Œåœ¨ `e => e.Language == CurrentLanguage` è¿™é‡Œå¢åŠ ä¸€äº›åˆ¤æ–­ï¼Œæ¯”å¦‚åœ¨DbContextå¢åŠ ä¸€ä¸ª `IsLanguageFilterEnabled` å±æ€§ï¼Œç„¶åå°†è¡¨è¾¾å¼æ”¹ä¸º `e => IsLanguageFilterEnabled || e.Language == CurrentLanguage`ï¼Œè¿™æ ·å°±å¯ä»¥é€šè¿‡è®¾ç½® `IsLanguageFilterEnabled` æ¥å•ç‹¬æ§åˆ¶æ˜¯å¦å¯ç”¨å¤šè¯­è¨€è¿‡æ»¤å™¨ã€‚
 
-µ«ÊÇÕâÖÖ·½°¸ÓĞÒ»¸ö±×¶Ë£¬ÄÇ¾ÍÊÇÉú³ÉµÄSQLÓï¾ä»á¶à³öÒ»¸öÅĞ¶ÏÌõ¼ş£¬´ó¸Å³¤ÕâÑù£º`(@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[Language] = @__ef_filter__CurrentLanguage_0)`£¬ÕâÑù»áÑÏÖØÓ°ÏìSQLµÄÖ´ĞĞĞ§ÂÊ¡£
+ä½†æ˜¯è¿™ç§æ–¹æ¡ˆæœ‰ä¸€ä¸ªå¼Šç«¯ï¼Œé‚£å°±æ˜¯ç”Ÿæˆçš„SQLè¯­å¥ä¼šå¤šå‡ºä¸€ä¸ªåˆ¤æ–­æ¡ä»¶ï¼Œå¤§æ¦‚é•¿è¿™æ ·ï¼š`(@__ef_filter__p_0 = CAST(1 AS bit) OR [a].[Language] = @__ef_filter__CurrentLanguage_0)`ï¼Œè¿™æ ·ä¼šä¸¥é‡å½±å“SQLçš„æ‰§è¡Œæ•ˆç‡ã€‚
 
-Òò´Ë£¬ÎÒÃÇĞèÒªÒ»ÖÖÄÜ¹»ÔËĞĞÊ±¸Ä±äÉú³ÉSQLÓï¾äµÄ°ì·¨£¬ÈÃÆä²»Òª²ÎÊı¶àÓàµÄORÅĞ¶ÏÌõ¼ş£¬ÒÅº¶µÄÊÇ£¬EfCore²¢Ã»ÓĞÌá¹©ÕâÑùµÄ¹¦ÄÜ£¬±í´ïÊ½Ò»µ©´«Èë¸ø `HasQueryFilter` ·½·¨£¬¾ÍÎŞ·¨ÔÙ¶¯Ì¬¸Ä±äÁË¡£ĞÒÔËµÄÊÇ£¬EfCoreÌá¹©ÁËÒ»¸ö·½·¨£¬¿ÉÒÔ½«Ò»¸öC#·½·¨Ó³Éä³ÉSQLÓï¾ä£¬Õâ¾ÍÊÇ `DbFunction`£¬Õâ¾ÍÈÃÔËĞĞÊ±¸Ä±äÉú³ÉSQLÓï¾ä³ÉÎªÁË¿ÉÄÜ¡£
+å› æ­¤ï¼Œæˆ‘ä»¬éœ€è¦ä¸€ç§èƒ½å¤Ÿè¿è¡Œæ—¶æ”¹å˜ç”ŸæˆSQLè¯­å¥çš„åŠæ³•ï¼Œè®©å…¶ä¸è¦äº§ç”Ÿå¤šä½™çš„ORåˆ¤æ–­æ¡ä»¶ï¼Œé—æ†¾çš„æ˜¯ï¼ŒEfCoreå¹¶æ²¡æœ‰æä¾›è¿™æ ·çš„åŠŸèƒ½ï¼Œè¡¨è¾¾å¼ä¸€æ—¦ä¼ å…¥ç»™ `HasQueryFilter` æ–¹æ³•ï¼Œå°±æ— æ³•å†åŠ¨æ€æ”¹å˜äº†ã€‚å¹¸è¿çš„æ˜¯ï¼ŒEfCoreæä¾›äº†ä¸€ä¸ªæ–¹æ³•ï¼Œå¯ä»¥å°†ä¸€ä¸ªC#æ–¹æ³•æ˜ å°„æˆSQLè¯­å¥ï¼Œè¿™å°±æ˜¯ `DbFunction`ï¼Œè¿™å°±è®©è¿è¡Œæ—¶æ”¹å˜ç”ŸæˆSQLè¯­å¥æˆä¸ºäº†å¯èƒ½ã€‚
 
-> ÇëÏÈÑ§Ï°ÁË½â[½«·½·¨Ó³Éäµ½×Ô¶¨Òå SQL](https://learn.microsoft.com/zh-cn/ef/core/querying/user-defined-function-mapping#mapping-a-method-to-a-custom-sql)£¬ÕâÀï²»ÔÙ×¸Êö¡£
+> è¯·å…ˆå­¦ä¹ äº†è§£[å°†æ–¹æ³•æ˜ å°„åˆ°è‡ªå®šä¹‰ SQL](https://learn.microsoft.com/zh-cn/ef/core/querying/user-defined-function-mapping#mapping-a-method-to-a-custom-sql)ï¼Œè¿™é‡Œä¸å†èµ˜è¿°ã€‚
 
-×îÖÕ£¬ÎÒÃÇµÄÄ¿±êÊÇÒªÍê³ÉÕâÑùµÄ°ó¶¨£º
+æœ€ç»ˆï¼Œæˆ‘ä»¬çš„ç›®æ ‡æ˜¯è¦å®Œæˆè¿™æ ·çš„ç»‘å®šï¼š
 ```csharp
 	modelBuilder.Entity<MyEntity>().HasQueryFilter(e => LanguageFilter.DbFunction("MyEntity", e.Language, CurrentLanguage));
 ```
 
-È»ºóÕâ¸ö `LanguageFilter.DbFunction` ½«»áÔÚÔËĞĞÊ±£¬¸ù¾İÊÇ·ñ¿ªÆô¹Ø±Õ¹ıÂËÆ÷£¬À´Éú³É²»Í¬µÄSQLÓï¾ä¡£
-- Èç¹û¿ªÆô£¬ÎÒÃÇÒª°´ÀàËÆ `modelBuilder.Entity<MyEntity>().HasQueryFilter(e => e.Language == CurrentLanguage);` µÄÅäÖÃÉú³ÉÒ»ÑùµÄSQL
-- Èç¹û¹Ø±Õ£¬ÔòÉú³É¿ÕSQLÓï¾ä¡£
+ç„¶åè¿™ä¸ª `LanguageFilter.DbFunction` å°†ä¼šåœ¨è¿è¡Œæ—¶ï¼Œæ ¹æ®æ˜¯å¦å¼€å¯å…³é—­è¿‡æ»¤å™¨ï¼Œæ¥ç”Ÿæˆä¸åŒçš„SQLè¯­å¥ã€‚
+- å¦‚æœå¼€å¯ï¼Œæˆ‘ä»¬è¦æŒ‰ç±»ä¼¼ `modelBuilder.Entity<MyEntity>().HasQueryFilter(e => e.Language == CurrentLanguage);` çš„é…ç½®ç”Ÿæˆä¸€æ ·çš„SQL
+- å¦‚æœå…³é—­ï¼Œåˆ™ç”Ÿæˆç©ºSQLè¯­å¥ã€‚
 
-ÏÖÔÚ»Øµ½ÎÒÃÇµÄ `LanguageFilter` ÀàÖĞ£º
+ç°åœ¨å›åˆ°æˆ‘ä»¬çš„ `LanguageFilter` ç±»ä¸­ï¼š
 
-- `DbFunction` ·½·¨ÊÇÒ»¸ö±ØĞëÒªÌá¹©¾²Ì¬·½·¨£¬EfCore Plus»á½«ÆäÅäÖÃ·­Òë³ÉÈ«¾Ö¹ıÂËµÄWhereÌõ¼şSQLÓï¾ä	
-	- ·µ»ØÖµ±ØĞëÊÇbool
-	- µÚÒ»¸ö²ÎÊı¹Ì¶¨ÊÇ `string entityType`, Õâ¸ö²ÎÊıÊÇEfCore PlusÄÚ²¿ÓÃÀ´±ê¼Çµ±Ç°²Ù×÷µÄÊµÌåÀàĞÍ
-	- ´ÓµÚ¶ş¸ö²ÎÊı¿ªÊ¼£¬ĞèÒªÄã½áºÏÄã¹ıÂËÆ÷Âß¼­½øĞĞ¶¨Òå£¬±¾ÀıÖĞ£¬µÚ¶ş¸ö²ÎÊıÊÇ `string language`£¬±íÊ¾ÊµÌåÖĞµÄÓïÑÔÊôĞÔ£¬µÚÈı¸ö²ÎÊıÊÇ `string? currentLanguage`£¬±íÊ¾µ±Ç°µÄÓïÑÔ²ÎÊı¡£
+- `DbFunction` æ–¹æ³•æ˜¯ä¸€ä¸ªå¿…é¡»è¦æä¾›é™æ€æ–¹æ³•ï¼ŒEfCore Plusä¼šå°†å…¶é…ç½®ç¿»è¯‘æˆå…¨å±€è¿‡æ»¤çš„Whereæ¡ä»¶SQLè¯­å¥	
+	- è¿”å›å€¼å¿…é¡»æ˜¯bool
+	- ç¬¬ä¸€ä¸ªå‚æ•°å›ºå®šæ˜¯ `string entityType`, è¿™ä¸ªå‚æ•°æ˜¯EfCore Pluså†…éƒ¨ç”¨æ¥æ ‡è®°å½“å‰æ“ä½œçš„å®ä½“ç±»å‹
+	- ä»ç¬¬äºŒä¸ªå‚æ•°å¼€å§‹ï¼Œéœ€è¦ä½ ç»“åˆä½ è¿‡æ»¤å™¨é€»è¾‘è¿›è¡Œå®šä¹‰ï¼Œæœ¬ä¾‹ä¸­ï¼Œç¬¬äºŒä¸ªå‚æ•°æ˜¯ `string language`ï¼Œè¡¨ç¤ºå®ä½“ä¸­çš„è¯­è¨€å±æ€§ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯ `string? currentLanguage`ï¼Œè¡¨ç¤ºå½“å‰çš„è¯­è¨€å‚æ•°ã€‚
 
-- `ShouldFilterEntity` ·½·¨ÊÇÓÃÓÚÅĞ¶Ïµ±Ç°ÊµÌåÊÇ·ñĞèÒªÓ¦ÓÃÕâ¸ö¹ıÂËÆ÷£¬EfCore Plus»áÔÚÉ¨ÃèËùÓĞÊµÌåÊ±£¬µ÷ÓÃÕâ¸ö·½·¨£¬½øĞĞ¹ıÂËÆ÷µÄÓ¦ÓÃ¡£
+- `ShouldFilterEntity` æ–¹æ³•æ˜¯ç”¨äºåˆ¤æ–­å½“å‰å®ä½“æ˜¯å¦éœ€è¦åº”ç”¨è¿™ä¸ªè¿‡æ»¤å™¨ï¼ŒEfCore Plusä¼šåœ¨æ‰«ææ‰€æœ‰å®ä½“æ—¶ï¼Œè°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œè¿›è¡Œè¿‡æ»¤å™¨çš„åº”ç”¨ã€‚
 
-- `BuildDbFunctionArgs` ·½·¨ÊÇÓÃÓÚ¹¹½¨ `DbFunction` ·½·¨µÄ²ÎÊı£¬Í¨¹ı±í´ïÊ½Ê÷µÄ·½Ê½½øĞĞ¹¹½¨
+- `BuildDbFunctionArgs` æ–¹æ³•æ˜¯ç”¨äºæ„å»º `DbFunction` æ–¹æ³•çš„å‚æ•°ï¼Œé€šè¿‡è¡¨è¾¾å¼æ ‘çš„æ–¹å¼è¿›è¡Œæ„å»º
 	
-	- `TDbContext dbContext` ÊÇµ±Ç°µÄDbContext£¬ÓÃÓÚ»ñÈ¡ `CurrentLanguage` ÊôĞÔ
+	- `TDbContext dbContext` æ˜¯å½“å‰çš„DbContextï¼Œç”¨äºè·å– `CurrentLanguage` å±æ€§
 	
-	- `Expression e` ÊÇµ±Ç°µÄÊµÌå±í´ïÊ½£¬ÓÃÓÚ»ñÈ¡ÊµÌåµÄ `Language` ÊôĞÔ
+	- `Expression e` æ˜¯å½“å‰çš„å®ä½“è¡¨è¾¾å¼ï¼Œç”¨äºè·å–å®ä½“çš„ `Language` å±æ€§
 	
-	> ²»ĞèÒªÄãÌá¹©DbFunction·½·¨µÄµÚÒ»¸ö²ÎÊı `string entityType`£¬EfCore Plus»á×Ô¶¯´«Èë
+	> ä¸éœ€è¦ä½ æä¾›DbFunctionæ–¹æ³•çš„ç¬¬ä¸€ä¸ªå‚æ•° `string entityType`ï¼ŒEfCore Plusä¼šè‡ªåŠ¨ä¼ å…¥
 
-- `BuildDbFunctionTranslation` ·½·¨ÓÃÓÚ¶¨Òå `DbFunction` ·½·¨ÈçºÎ·­Òë³ÉSQLÓï¡£`IReadOnlyList<SqlExpression> args` ÊÇ `DbFunction` ·½·¨µÄ²ÎÊıÁĞ±í£¬ÄãĞèÒª¸ù¾İÕâ¸ö²ÎÊıÁĞ±í£¬¹¹½¨Ò»¸ö `SqlExpression` ¶ÔÏó£¬ÓÃÓÚÉú³ÉSQLÓï¾ä
+- `BuildDbFunctionTranslation` æ–¹æ³•ç”¨äºå®šä¹‰ `DbFunction` æ–¹æ³•å¦‚ä½•ç¿»è¯‘æˆSQLè¯­ã€‚`IReadOnlyList<SqlExpression> args` æ˜¯ `DbFunction` æ–¹æ³•çš„å‚æ•°åˆ—è¡¨ï¼Œä½ éœ€è¦æ ¹æ®è¿™ä¸ªå‚æ•°åˆ—è¡¨ï¼Œæ„å»ºä¸€ä¸ª `SqlExpression` å¯¹è±¡ï¼Œç”¨äºç”ŸæˆSQLè¯­å¥
