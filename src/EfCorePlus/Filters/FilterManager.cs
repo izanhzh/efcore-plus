@@ -55,7 +55,7 @@ namespace EfCorePlus.Filters
                 {
                     throw new InvalidOperationException($"The type `{filterType.FullName}` does not implement the interface `{typeof(IFilter).FullName}`.");
                 }
-                if(!_filterFactory.IsRegistered(filterType))
+                if (!_filterFactory.IsRegistered(filterType))
                 {
                     throw new InvalidOperationException($"The filter `{filterType.FullName}` is not registered.");
                 }
@@ -182,7 +182,9 @@ namespace EfCorePlus.Filters
 
         private void ReBuildCompiledQueryCacheKey()
         {
-            CompiledQueryCacheKey = string.Join("|", _allEntityDisabledFilters) + "|" + string.Join("|", _entityDisabledFilters.Select(x => x.Key.FullName + ":" + string.Join(",", x.Value)));
+            var key1 = string.Join("|", _allEntityDisabledFilters.Select(s => s.FullName).OrderBy(o => o));
+            var key2 = string.Join("|", _entityDisabledFilters.Select(x => x.Key.FullName + ":" + string.Join(",", x.Value)).OrderBy(o => o));
+            CompiledQueryCacheKey = $"{key1}&{key2}";
         }
     }
 }
